@@ -101,57 +101,68 @@ You must address the following questions and tasks in your exploratory analysis.
 	![](https://github.com/weiting1989/EDdata-Project2/blob/master/plot3.png)
 
 4. Across the United States, how have emissions from coal combustion-related sources changed from 1999–2008?
-    Coal combustion related sources
-    >coalscc <- SCC[grepl("coal",SCC$Short.Name,ignore.case = TRUE),]
-    >mergeData<-merge(NEI,coalscc,by = "SCC")
     
-    using ggplot2 to plot the graph
-    >myplot<-ggplot(plotdata,aes(factor(year),Emissions)) +
-    >    geom_bar(aes(fill=factor(year)),stat="identity",width=.8) +
-    >    theme_bw()+guides(fill=FALSE) +
-    >    xlab(label = "Year")+
-    >    ylab(label = expression("PM"[2.5]*" Emissions (Tons)"))+
-    >    labs(title=expression("PM"[2.5]*" Coal Combustion Source Emissions Across     
-	>	 US from 1999-2008"))
-    >print(myplot)
+	Coal combustion related sources	
+	```r
+    coalscc <- SCC[grepl("coal",SCC$Short.Name,ignore.case = TRUE),]
+    mergeData<-merge(NEI,coalscc,by = "SCC")
+	```
 	
-    ![](https://github.com/weiting1989/EDdata-Project2/blob/master/plot4.png)
+    using ggplot2 to plot the graph    
+	```r
+	myplot<-ggplot(plotdata,aes(factor(year),Emissions)) +
+        geom_bar(aes(fill=factor(year)),stat="identity",width=.8) +
+        theme_bw()+guides(fill=FALSE) +
+        xlab(label = "Year")+
+        ylab(label = expression("PM"[2.5]*" Emissions (Tons)"))+
+        labs(title=expression("PM"[2.5]*" Coal Combustion Source Emissions Across 
+		US from 1999-2008"))
+    print(myplot)
+	```
+    
+	![](https://github.com/weiting1989/EDdata-Project2/blob/master/plot4.png)
 
 5. How have emissions from motor vehicle sources changed from 1999–2008 in Baltimore City?
 
-    Retrive Baltimore data and sum the emission by each year
-    >BaltimorePM <- subset(NEI,fips=="24510")
-    >VCSCC <- SCC[grepl("vehicle",SCC$SCC.Level.Two,ignore.case=TRUE),]
-    >BaltimorePM <- merge(BaltimorePM,VCSCC,by="SCC")
+    Retrive Baltimore data and sum the emission by each year    
+	```r
+	BaltimorePM <- subset(NEI,fips=="24510")
+    VCSCC <- SCC[grepl("vehicle",SCC$SCC.Level.Two,ignore.case=TRUE),]
+    BaltimorePM <- merge(BaltimorePM,VCSCC,by="SCC")
+	```
     
-    Using ggplot2 to make a plot
-    >myplot <-ggplot(BaltimorePM,aes(factor(year),Emissions))+
-    >geom_bar(aes(fill=factor(year)),stat = "identity",width = 0.8)+
-    >theme_bw()+guides(fill=FALSE) +xlab(label = "Year")+
-    >ylab(label = expression("PM"[2.5]*" Emissions (Tons)"))+
-    >labs(title=expression("PM"[2.5]*" Motor Vehicle Source Emissions in Baltimore
-    >from 1999-2008"))
-    >print(myplot)
-	
+	Using ggplot2 to make a plot	
+	```r
+    myplot <-ggplot(BaltimorePM,aes(factor(year),Emissions))+
+    geom_bar(aes(fill=factor(year)),stat = "identity",width = 0.8)+
+    theme_bw()+guides(fill=FALSE) +xlab(label = "Year")+
+    ylab(label = expression("PM"[2.5]*" Emissions (Tons)"))+
+    labs(title=expression("PM"[2.5]*" Motor Vehicle Source Emissions in Baltimore
+    from 1999-2008"))
+    print(myplot)
+	```
 ![](https://github.com/weiting1989/EDdata-Project2/blob/master/plot5.png)
 
 6. Compare emissions from motor vehicle sources in Baltimore City with emissions from motor vehicle sources in Los Angeles County, California (). Which city has seen greater changes over time in motor vehicle emissions?
 
-    Retrive Baltimore data and sum the emission by each year
-    >Bm_CaPM <- subset(NEI,fips=="24510"|fips== "06037")
-    >VCSCC <- SCC[grepl("vehicle",SCC$SCC.Level.Two,ignore.case=TRUE),]
-    >plotdata <- merge(Bm_CaPM,VCSCC,by="SCC")
-    >plotdata$fips <- factor(plotdata$fips, labels = c("Los Angeles
-    >County","Baltimore City"))
-    
-    Make a plot by using ggplot2
-    >myplot<-ggplot(plotdata,aes(factor(year),Emissions,fill=fips))+
-    >facet_grid(.~fips)+
-    >geom_bar(aes(fill=factor(year)),stat = "identity",width = 0.8)+
-    >theme_bw()+guides(fill=FALSE) +xlab(label = "Year")+
-    >ylab(label = expression("PM"[2.5]*" Emissions (Tons)"))+
-    >labs(title=expression("PM"[2.5]*" Motor Vehicle  Emissions in Baltimore & Los
-    >Angles"))
-    >print(myplot)
+    Retrive Baltimore data and sum the emission by each year    
+	```r
+	Bm_CaPM <- subset(NEI,fips=="24510"|fips== "06037")
+    VCSCC <- SCC[grepl("vehicle",SCC$SCC.Level.Two,ignore.case=TRUE),]
+    plotdata <- merge(Bm_CaPM,VCSCC,by="SCC")
+    plotdata$fips <- factor(plotdata$fips, labels = c("Los Angeles
+	County","Baltimore City"))    
+	```
+    Make a plot by using ggplot2	
+	```r
+    myplot<-ggplot(plotdata,aes(factor(year),Emissions,fill=fips))+
+    facet_grid(.~fips)+
+    geom_bar(aes(fill=factor(year)),stat = "identity",width = 0.8)+
+    theme_bw()+guides(fill=FALSE) +xlab(label = "Year")+
+    ylab(label = expression("PM"[2.5]*" Emissions (Tons)"))+
+    labs(title=expression("PM"[2.5]*" Motor Vehicle  Emissions in Baltimore & Los
+    Angles"))
+    print(myplot)
+	```
 	
 ![](https://github.com/weiting1989/EDdata-Project2/blob/master/plot6.png)
