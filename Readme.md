@@ -47,28 +47,39 @@ The overall goal of this assignment is to explore the National Emissions Invento
 You must address the following questions and tasks in your exploratory analysis. For each question/task you will need to make a single plot. Unless specified, you can use any plotting system in R to make your plot.
 
 1. Have total emissions from PM2.5 decreased in the United States from 1999 to 2008? Using the base plotting system, make a plot showing the total PM2.5 emission from all sources for each of the years 1999, 2002, 2005, and 2008.
-    Aggregate total emissions from all source for each of the years 1999,2002,2005,2008
-    >emission <- aggregate(Emissions ~ year,NEI, FUN=sum)
     
-    using barplot (base plotting system), make a plot total emssion for each of the years.
-    > barplot(emission$Emissions/10^6, names.arg = emission$year, 
+	Aggregate total emissions from all source for each of the years 1999,2002,2005,2008
+	```r
+	emission <- aggregate(Emissions ~ year,NEI, FUN=sum)
+	```    
+    
+	using barplot (base plotting system), make a plot total emssion for each of the years.
+	```r
+     barplot(emission$Emissions/10^6, names.arg = emission$year, 
         xlab ="Year",
         ylab=expression("PM"[2.5]*" Emissions (10^6 Tons)"),
-        main =expression("Total Emission PM"[2.5]*" From All US Source"))
+        main =expression("Total Emission PM"[2.5]*" From All US Source"))	
+	```
 
 ![](https://github.com/weiting1989/EDdata-Project2/blob/master/plot1.png)
 
 2. Have total emissions from PM2.5 decreased in the Baltimore City, Maryland () from 1999 to 2008? Use the base plotting system to make a plot answering this question.
 
     Retrive Baltimore data and sum the emission by each year
-    >BaltimorePM <- subset(NEI,fips=="24510")
-    >BaltimoreEm <- aggregate(Emissions~year,BaltimorePM,FUN = sum)
-    
+	
+	```r
+    BaltimorePM <- subset(NEI,fips=="24510")
+    BaltimoreEm <- aggregate(Emissions~year,BaltimorePM,FUN = sum)
+    ```
+
     Using base plotting system,plot the graph
-    >barplot(BaltimoreEm$Emissions, names.arg = BaltimoreEm$year, 
+    ```r
+	barplot(BaltimoreEm$Emissions, names.arg = BaltimoreEm$year, 
         xlab ="Year",ylab=expression(paste(PM[2.5]," Emissions (Tons)")),
         main =expression(paste("Total Emission ",PM[2.5]," From Baltimore,Maryland")))
-    ![](https://github.com/weiting1989/EDdata-Project2/blob/master/plot2.png)
+    ```
+	
+	![](https://github.com/weiting1989/EDdata-Project2/blob/master/plot2.png)
     
 3. Of the four types of sources indicated by the  (point, nonpoint, onroad, nonroad) variable, which of these four sources have seen decreases in emissions from 1999–2008 for Baltimore City? Which have seen increases in emissions from 1999–2008? Use the ggplot2 plotting system to make a plot answer this question.
 
@@ -76,15 +87,18 @@ You must address the following questions and tasks in your exploratory analysis.
     >BaltimorePM <- subset(NEI,fips=="24510")
     
      Using ggplot2 system
-    >myplot <-ggplot(BaltimorePM,aes(factor(year),Emissions,fill=type))+
-    >facet_grid(.~type)+geom_bar(stat="identity")+
-    >theme_bw()+guides(fill=FALSE)+
-    >xlab(label = "Year")+
-    >ylab(label = expression("PM"[2.5]*" Emissions (Tons)"))+
-    >labs(title=expression("PM"[2.5]*" Emissions from Baltimore City in 1999-2008 by
-    >Source Type"))
-    >print(myplot)
-![](https://github.com/weiting1989/EDdata-Project2/blob/master/plot3.png)
+	 ```r
+		myplot <-ggplot(BaltimorePM,aes(factor(year),Emissions,fill=type))+
+		facet_grid(.~type)+geom_bar(stat="identity")+
+		theme_bw()+guides(fill=FALSE)+
+		xlab(label = "Year")+
+		ylab(label = expression("PM"[2.5]*" Emissions (Tons)"))+
+		labs(title=expression("PM"[2.5]*" Emissions from Baltimore City in 1999-2008 by
+		Source Type"))
+		print(myplot)		
+	```
+
+	![](https://github.com/weiting1989/EDdata-Project2/blob/master/plot3.png)
 
 4. Across the United States, how have emissions from coal combustion-related sources changed from 1999–2008?
     Coal combustion related sources
@@ -97,8 +111,10 @@ You must address the following questions and tasks in your exploratory analysis.
     >    theme_bw()+guides(fill=FALSE) +
     >    xlab(label = "Year")+
     >    ylab(label = expression("PM"[2.5]*" Emissions (Tons)"))+
-    >    labs(title=expression("PM"[2.5]*" Coal Combustion Source Emissions Across     >US from 1999-2008"))
+    >    labs(title=expression("PM"[2.5]*" Coal Combustion Source Emissions Across     
+	>	 US from 1999-2008"))
     >print(myplot)
+	
     ![](https://github.com/weiting1989/EDdata-Project2/blob/master/plot4.png)
 
 5. How have emissions from motor vehicle sources changed from 1999–2008 in Baltimore City?
@@ -116,6 +132,7 @@ You must address the following questions and tasks in your exploratory analysis.
     >labs(title=expression("PM"[2.5]*" Motor Vehicle Source Emissions in Baltimore
     >from 1999-2008"))
     >print(myplot)
+	
 ![](https://github.com/weiting1989/EDdata-Project2/blob/master/plot5.png)
 
 6. Compare emissions from motor vehicle sources in Baltimore City with emissions from motor vehicle sources in Los Angeles County, California (). Which city has seen greater changes over time in motor vehicle emissions?
@@ -136,4 +153,5 @@ You must address the following questions and tasks in your exploratory analysis.
     >labs(title=expression("PM"[2.5]*" Motor Vehicle  Emissions in Baltimore & Los
     >Angles"))
     >print(myplot)
+	
 ![](https://github.com/weiting1989/EDdata-Project2/blob/master/plot6.png)
